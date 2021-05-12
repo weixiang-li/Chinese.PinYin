@@ -16,21 +16,21 @@ namespace TestChinese
         [Test]
         public void TestToAlias()
         {
-            string str = current.ConvertToAlias("ÎÒÊÇÖĞ¹úÈË¡£");
+            string str = current.ConvertToAlias("æˆ‘æ˜¯ä¸­å›½äºº");
             Assert.AreEqual(str, "WSZGR");
         }
 
         [Test]
         public void TestSadDiff()
         {
-            string str = current.ConvertToAlias("ÖØÇì");
+            string str = current.ConvertToAlias("é‡åº†");
             Assert.AreEqual(str, "CQ");
         }
 
         [Test]
         public void TestSadDiff2()
         {
-            string str = current.ConvertToAlias("ÖØÁ¿", true);
+            string str = current.ConvertToAlias("é‡é‡", true);
             Assert.AreEqual(str, "ZL");
         }
     }
