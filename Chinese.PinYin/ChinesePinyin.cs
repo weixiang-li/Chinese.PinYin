@@ -9,29 +9,31 @@ namespace Chinese.PinYin
 {
     public class ChinesePinyin
     {
-        static readonly Task initTask = null;
-        static ChinesePinyin instance;
+        private static Task initTask = null;
+        private static ChinesePinyin instance;
 
         static ChinesePinyin()
         {
             initTask = Entity.Chinese.ParseDictAsync();
         }
 
-
         public static ChinesePinyin Current
         {
             get
             {
-                if (!initTask.IsCompleted)
+                if (instance == null)
                 {
-                    initTask.Wait();
-                    initTask.Dispose();
-                }
-                lock(initTask)
-                {
-                    if (instance == null)
+                    lock (initTask)
                     {
-                        instance = new ChinesePinyin();
+                        using (initTask)
+                        {
+                            initTask.Wait();
+                            initTask = null;
+                        }
+                        if (instance == null)
+                        {
+                            instance = new ChinesePinyin();
+                        }
                     }
                 }
                 return instance;
